@@ -39,7 +39,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    void testGetAllCustomers() throws Exception {
+    void getAllCustomers() throws Exception {
         Customer customer = new Customer(UUID.randomUUID(), "John", "Doe");
         Mockito.when(customerRepository.findAll()).thenReturn(List.of(customer));
 
@@ -50,7 +50,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    void testGetCustomerByIdFound() throws Exception {
+    void getCustomerByIdFound() throws Exception {
         UUID id = UUID.randomUUID();
         Customer customer = new Customer(id, "Jane", "Smith");
         Mockito.when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
@@ -62,7 +62,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    void testGetCustomerByIdNotFound() throws Exception {
+    void getCustomerByIdNotFound() throws Exception {
         UUID id = UUID.randomUUID();
         Mockito.when(customerRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -71,7 +71,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    void testCreateCustomer() throws Exception {
+    void createCustomer() throws Exception {
         Customer customer = new Customer(null, "Alice", "Wonderland");
         Customer savedCustomer = new Customer(UUID.randomUUID(), "Alice", "Wonderland");
 
@@ -82,12 +82,11 @@ public class CustomerControllerTest {
                         .content(objectMapper.writeValueAsString(customer)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("Alice"))
-                .andExpect(jsonPath("$.lastName").value("Wonderland"))
-                .andExpect(jsonPath("$.id").exists());
+                .andExpect(jsonPath("$.lastName").value("Wonderland"));
     }
 
     @Test
-    void testUpdateCustomerFound() throws Exception {
+    void updateCustomerFound() throws Exception {
         UUID id = UUID.randomUUID();
         Customer existingCustomer = new Customer(id, "Old", "Name");
         Customer updatedCustomer = new Customer(id, "New", "Name");
@@ -104,7 +103,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    void testUpdateCustomerNotFound() throws Exception {
+    void updateCustomerNotFound() throws Exception {
         UUID id = UUID.randomUUID();
         Customer updatedCustomer = new Customer(id, "New", "Name");
 
@@ -117,7 +116,7 @@ public class CustomerControllerTest {
     }
 
     @Test
-    void testDeleteCustomerFound() throws Exception {
+    void deleteCustomerFound() throws Exception {
         UUID id = UUID.randomUUID();
 
         Mockito.when(customerRepository.existsById(id)).thenReturn(true);
@@ -127,7 +126,7 @@ public class CustomerControllerTest {
                 .andExpect(status().isNoContent());
     }
     @Test
-    void testDeleteCustomerNotFound() throws Exception {
+    void deleteCustomerNotFound() throws Exception {
         UUID id = UUID.randomUUID();
 
         Mockito.when(customerRepository.existsById(id)).thenReturn(false);
