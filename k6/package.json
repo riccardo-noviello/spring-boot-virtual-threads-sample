@@ -1,0 +1,10 @@
+{
+  "name": "customers-k6-test",
+  "version": "1.0.0",
+  "scripts": {
+  },
+  "devDependencies": {
+    "k6": "^0.51.0"
+  }
+}
+
